@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #000;
+            color: #e0e0e0;
+            overflow: hidden;
+            position: relative;
+            height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 150, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 191, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 90% 30%, rgba(255, 105, 180, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 60% 90%, rgba(147, 51, 234, 0.3) 0%, transparent 50%);
+            animation: gradientShift 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1) rotate(5deg);
+                opacity: 0.9;
+            }
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px 25px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(1.2);
+        }
+
+        .nav-dot.active {
+            background: #ff69b4;
+            width: 30px;
+            border-radius: 10px;
+        }
+
+        /* Arrow Navigation */
+        .arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .arrow:hover {
+            color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-50%) scale(1.2);
+        }
+
+        .arrow-left {
+            left: 30px;
+        }
+
+        .arrow-right {
+            right: 30px;
+        }
+
+        /* Hero Slide */
+        .hero {
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1.5s ease;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.5), 0 0 40px rgba(138, 43, 226, 0.3);
+            font-weight: 700;
+            color: #f0f0f0;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #d0d0d0;
+            margin-bottom: 2rem;
+        }
+
+        .start-btn {
+            background: rgba(255, 105, 180, 0.3);
+            border: 2px solid rgba(255, 105, 180, 0.8);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            margin-top: 20px;
+        }
+
+        .start-btn:hover {
+            background: rgba(255, 105, 180, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+        }
+
+        /* Love Letter Slide */
+        .love-letter {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 60px;
+            border-radius: 20px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .love-letter::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .love-letter::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .love-letter::-webkit-scrollbar-thumb {
+            background: rgba(255, 105, 180, 0.5);
+            border-radius: 10px;
+        }
+
+        .love-letter h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #f0f0f0;
+        }
+
+        .love-letter p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+            color: #d0d0d0;
+            font-weight: 300;
+        }
+
+        /* Memories Slide */
+        .memories-content {
+            max-width: 1200px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .memories-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .memories-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .memories-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 105, 180, 0.5);
+            border-radius: 10px;
+        }
+
+        .memories h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 50px;
+            color: #f0f0f0;
+            text-align: center;
+        }
+
+        .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+        .photo-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-10px) scale(1.05);
+        }
+
+        .photo-card p {
+            color: #e0e0e0;
+            font-weight: 400;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Image Popup */
+        .image-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .image-popup.show {
+            display: flex;
+        }
+
+        .image-popup-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .image-popup-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.4);
+        }
+
+        .image-popup-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-popup-close:hover {
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .image-popup-caption {
+            text-align: center;
+            color: #fff;
+            font-size: 1.3rem;
+            margin-top: 20px;
+            font-weight: 400;
+        }
+
+        .image-popup-emoji {
+            font-size: 5rem;
+            margin: 20px 0;
+        }
+
+        /* Countdown Slide */
+        .countdown h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: #f0f0f0;
+        }
+
+        .countdown-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+            color: #f0f0f0;
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            margin-top: 10px;
+            color: #d0d0d0;
+        }
+
+        /* Wishes Slide */
+        .wishes-container {
+            max-width: 900px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .wishes-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .wishes-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .wishes-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 105, 180, 0.5);
+            border-radius: 10px;
+        }
+
+        .wishes-container h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 40px;
+            color: #f0f0f0;
+            text-align: center;
+        }
+
+        .wish-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .wish-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #f0f0f0;
+        }
+
+        .wish-card p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #d0d0d0;
+            font-weight: 300;
+        }
+
+        button {
+            background: rgba(255, 105, 180, 0.3);
+            border: 2px solid rgba(255, 105, 180, 0.8);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        button:hover {
+            background: rgba(255, 105, 180, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+        }
+
+        .heart {
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            animation: floatHeart 3s ease-in-out;
+            z-index: 1000;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floatHeart {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-1000px) rotate(720deg);
+            }
+        }
+
+        /* Surprise Popup */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .popup-overlay.show {
+            display: flex;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(138, 43, 226, 0.3));
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 105, 180, 0.5);
+            border-radius: 30px;
+            padding: 60px 40px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.4);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.5) rotate(-10deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-close:hover {
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        .popup-emoji {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .popup-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #f0f0f0;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+
+        .popup-content p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .popup-btn {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.5), rgba(138, 43, 226, 0.5));
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .popup-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.7), rgba(138, 43, 226, 0.7));
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .love-letter, .wish-card {
+                padding: 30px;
+            }
+            .arrow {
+                font-size: 2rem;
+            }
+            .arrow-left {
+                left: 15px;
+            }
+            .arrow-right {
+                right: 15px;
+            }
+            .popup-content {
+                padding: 40px 30px;
+            }
+            .popup-emoji {
+                font-size: 3.5rem;
+            }
+            .popup-content h2 {
+                font-size: 2rem;
+            }
+            .popup-content p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Hero -->
+    <div class="slide active hero" data-slide="0">
+        <h1>Happy 20th Birthday Adi 💖</h1>
+        <p>To the most precious person in my life</p>
+        <button class="start-btn" onclick="nextSlide()">Press Button to Start ✨</button>
+    </div>
+
+    <!-- Slide 2: Love Letter -->
+    <div class="slide" data-slide="1">
+        <div class="love-letter">
+            <h2>A Letter From Your Adi 💌</h2>
+            <p>
+                My dearest Adi, on this special day, I want you to know how incredibly grateful I am to have you in my life. 
+                You bring light to my darkest days, joy to every moment, and meaning to everything I do.
+            </p>
+            <p>
+                Your smile is my favorite sight, your laugh is my favorite sound, and your happiness is my favorite feeling. 
+                Every day with you is a gift, and I cherish every single moment we spend together.
+            </p>
+            <p>
+                Thank you for being you, and thank you for letting me be part of your journey.
+            </p>
+            <p>
+                Happy birthday, my Adi. Here's to many more years of laughter, memories, and endless love together.
+            </p>
+            <p style="text-align: right; margin-top: 30px; font-style: italic;">
+                Forever your Adi ❤️
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 3: Memories -->
+    <div class="slide memories" data-slide="2">
+        <div class="memories-content">
+            <h2>📸Images📸</h2>
+            <div class="photo-grid">
+    <div class="photo-card" onclick="openImagePopup('images/photo1.jpeg','First Photo')">
+        <div class="photo-placeholder">
+            <img src="images/photo1.jpeg" alt="First Photo">
+        </div>
+        <p>First Photo</p>
+    </div>
+    <div class="photo-card" onclick="openImagePopup('images/photo2.jpeg','Future Wedding')">
+        <div class="photo-placeholder">
+            <img src ="images/photo2.jpeg" alt="Future Wedding">   
+        </div>
+        <p>Future Wedding</p>
+    </div>
+    <div class="photo-card" onclick="openImagePopup('images/photo3.jpeg', 'Beach Together')">
+        <div class="photo-placeholder">
+             <img src ="images/photo3.jpeg" alt="Beach Together">
+        </div>
+        <p>Beach Together</p>
+    </div>
+    <div class="photo-card" onclick="openImagePopup('images/photo4.jpeg', 'Future Family')">
+        <div class="photo-placeholder">
+            <img src ="images/photo4.jpeg" alt="Future Family">
+        </div>
+        <p>Future Family</p>
+    </div>
+    <div class="photo-card" onclick="openImagePopup('images/photo5.jpeg', 'Us in the Cherry Blossoms')">
+        <div class="photo-placeholder">
+            <img src ="images/photo5.jpeg" alt="Future Family">
+        </div>
+        <p>Us in the Cherry Blossoms</p>
+    </div>
+</div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Countdown -->
+    <div class="slide countdown" data-slide="3">
+        <h2>Time We've Been Together ⏰</h2>
+        <div class="countdown-container" id="timeCounter">
+            <div class="countdown-item">
+                <span class="countdown-number" id="days">0</span>
+                <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="hours">0</span>
+                <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="minutes">0</span>
+                <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="seconds">0</span>
+                <span class="countdown-label">Seconds</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Wishes -->
+    <div class="slide" data-slide="4">
+        <div class="wishes-container">
+            <h2>My Wishes For You 🌟</h2>
+            <div class="wish-card">
+                <h3>May Your Dreams Come True</h3>
+                <p>I wish for all your dreams to come true, for every goal you set to be achieved, and for happiness to follow you wherever you go.</p>
+            </div>
+            <div class="wish-card">
+                <h3>May We Create More Memories</h3>
+                <p>I can't wait to create more beautiful memories with you, to share countless more laughs together.</p>
+            </div>
+            <div class="wish-card">
+                <h3>May You Always Feel Loved</h3>
+                <p>I promise to always love you, how much you mean to me, and how deeply I'm in love with you. Today and always.</p>
+            </div>
+            <div style="text-align: center;">
+                <button onclick="showSurprise()">Click the button🎁</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="arrow arrow-left" onclick="prevSlide()">‹</div>
+    <div class="arrow arrow-right" onclick="nextSlide()">›</div>
+
+    <!-- Navigation Dots -->
+    <div class="nav-container">
+        <div class="nav-dot active" onclick="goToSlide(0)"></div>
+        <div class="nav-dot" onclick="goToSlide(1)"></div>
+        <div class="nav-dot" onclick="goToSlide(2)"></div>
+        <div class="nav-dot" onclick="goToSlide(3)"></div>
+        <div class="nav-dot" onclick="goToSlide(4)"></div>
+    </div>
+
+    <!-- Surprise Popup -->
+    <div class="popup-overlay" id="surprisePopup">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closePopup()">×</button>
+            <div class="popup-emoji">🎉💖✨</div>
+            <h2>Happy 20th Birthday Adi</h2>
+            <p>You are the most precious person in my life! Every moment with you is a treasure, and I'm so grateful to celebrate this special day with you.</p>
+            <p>I love you more than words can express. Here's to many more birthdays together, filled with laughter, love, and endless happiness!</p>
+            <button class="popup-btn" onclick="closePopup()">I Love You Adi💕</button>
+        </div>
+    </div>
+
+    <!-- Image Popup -->
+    <div class="image-popup" id="imagePopup">
+        <div class="image-popup-content">
+            <button class="image-popup-close" onclick="closeImagePopup()">×</button>
+            <img id="popupImage" src="" alt="">
+            <div class="image-popup-caption" id="popupCaption"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const navDots = document.querySelectorAll('.nav-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            navDots[currentSlide].classList.remove('active');
+            
+            currentSlide = (n + totalSlides) % totalSlides;
+            
+            slides[currentSlide].classList.add('active');
+            navDots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Countdown Timer - Set to May 15, 2024
+        const startDate = new Date('2024-05-15').getTime();
+        
+        function updateCounter() {
+            const now = new Date().getTime();
+            const diff = now - startDate;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+        
+        updateCounter();
+        setInterval(updateCounter, 1000);
+        
+        // Floating hearts on click
+        document.addEventListener('click', function(e) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '❤️';
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 3000);
+        });
+        
+        // Image Popup Functions
+        function openImagePopup(imageSrc, caption, emoji = '') {
+            const popup = document.getElementById('imagePopup');
+            const popupImage = document.getElementById('popupImage');
+            const popupCaption = document.getElementById('popupCaption');
+            
+            if (imageSrc) {
+                // Show actual image
+                popupImage.src = imageSrc;
+                popupImage.style.display = 'block';
+                popupCaption.innerHTML = caption;
+            } else {
+                // Show emoji placeholder
+                popupImage.style.display = 'none';
+                popupCaption.innerHTML = `<div class="image-popup-emoji">${emoji}</div>${caption}`;
+            }
+            
+            popup.classList.add('show');
+        }
+
+        function closeImagePopup() {
+            document.getElementById('imagePopup').classList.remove('show');
+        }
+
+        // Close image popup when clicking outside
+        document.getElementById('imagePopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImagePopup();
+            }
+        });
+        
+        // Surprise message
+        function showSurprise() {
+            document.getElementById('surprisePopup').classList.add('show');
+        }
+
+        function closePopup() {
+            document.getElementById('surprisePopup').classList.remove('show');
+        }
+
+        // Close popup when clicking outside
+        document.getElementById('surprisePopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePopup();
+            }
+        });
+
+        // Close popups with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePopup();
+                closeImagePopup();
+            }
+        });
+    </script>
+
+    
+</body>
+</html>
