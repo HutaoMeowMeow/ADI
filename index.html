@@ -622,30 +622,107 @@
 
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
-            .love-letter, .wish-card {
-                padding: 30px;
+            .hero p {
+                font-size: 1.1rem;
+            }
+            .love-letter {
+                padding: 30px 20px;
+                max-width: 95%;
+            }
+            .love-letter h2 {
+                font-size: 2rem;
+            }
+            .love-letter p {
+                font-size: 1rem;
+            }
+            .wish-card {
+                padding: 25px 20px;
+            }
+            .wish-card h3 {
+                font-size: 1.5rem;
+            }
+            .wish-card p {
+                font-size: 1rem;
             }
             .arrow {
                 font-size: 2rem;
             }
             .arrow-left {
-                left: 15px;
+                left: 10px;
             }
             .arrow-right {
-                right: 15px;
+                right: 10px;
+            }
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 10px;
+            }
+            .photo-placeholder {
+                height: 150px;
+            }
+            .memories h2 {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+            .countdown h2 {
+                font-size: 2rem;
+            }
+            .countdown-container {
+                gap: 15px;
+            }
+            .countdown-item {
+                padding: 20px;
+                min-width: 80px;
+            }
+            .countdown-number {
+                font-size: 2rem;
+            }
+            .countdown-label {
+                font-size: 0.9rem;
+            }
+            .wishes-container h2 {
+                font-size: 2rem;
+            }
+            .nav-container {
+                bottom: 15px;
+                padding: 10px 20px;
+                gap: 10px;
+            }
+            .nav-dot {
+                width: 10px;
+                height: 10px;
+            }
+            .nav-dot.active {
+                width: 25px;
             }
             .popup-content {
-                padding: 40px 30px;
+                padding: 40px 25px;
+                width: 95%;
             }
             .popup-emoji {
                 font-size: 3.5rem;
             }
             .popup-content h2 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             .popup-content p {
+                font-size: 1rem;
+            }
+            .start-btn, button, .popup-btn {
+                font-size: 1rem;
+                padding: 12px 30px;
+            }
+            .image-popup-content {
+                max-width: 95%;
+            }
+            .image-popup-close {
+                top: -40px;
+                font-size: 2.5rem;
+            }
+            .image-popup-caption {
                 font-size: 1.1rem;
             }
         }
@@ -743,8 +820,9 @@
                 <span class="countdown-label">Seconds</span>
             </div>
         </div>
+        
     </div>
-
+ 
     <!-- Slide 5: Wishes -->
     <div class="slide" data-slide="4">
         <div class="wishes-container">
@@ -853,8 +931,8 @@
             document.getElementById('seconds').textContent = seconds;
         }
         
-
-        
+        // updateCounter();
+        // setInterval(updateCounter, 1000); // Commented out to freeze timer
         
         // Floating hearts on click
         document.addEventListener('click', function(e) {
@@ -927,4 +1005,3 @@
     
 </body>
 </html>
-
